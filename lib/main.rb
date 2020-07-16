@@ -36,4 +36,16 @@ module Enumerable
     
     filtered
   end
+
+  def my_each_with_index
+    return enum_for unless block_given?
+    array = is_a?(Range) ? to_a : self
+
+    index = -1
+    for item in array
+      yield(item, index+=1)
+    end
+    array
+  end
+
 end
