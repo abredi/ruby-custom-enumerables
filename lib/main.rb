@@ -31,6 +31,15 @@ module Enumerable
     filtered
   end
    
+  def my_all?
+    flag = true
+    for item in array
+      flag = yield(item)
+      break unless flag
+    end
+    flag
+  end
+   
   def my_map(prok = nil)
     array = is_a?(Range) ? to_a : self
 
