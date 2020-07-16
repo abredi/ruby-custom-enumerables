@@ -19,5 +19,22 @@ module Enumerable
     end
     array
   end
+   
+  def my_map(prok = nil)
+    # return enum_for unless block_given?
+    array = is_a?(Range) ? to_a : self
 
+    filtered = []
+    if prok
+      for item in array
+        filtered.push(prok.call(item)) 
+      end
+    else
+      for item in array
+        filtered.push(yield(item))
+      end
+    end
+    
+    filtered
+  end
 end
