@@ -89,5 +89,32 @@ module Enumerable
     end
     array
   end
+  
+  def my_inject(init = nil)
+    array = is_a?(Range) ? to_a : self
+
+    acc =  init
+
+    unless init.is_a?(Integer)
+      acc = array[0]
+      array.shift
+    end
+
+    if init.is_a?(Symbol)
+      for item in array do
+        acc = acc.send(init, item)
+      end
+      return acc
+    end
+
+    for item in array do
+      acc = yield(acc, item)
+    end
+    acc
+  end
+
+  def multiply_els ary
+    ary.my_inject { |mul, n| mul * n }
+  end
 
 end
