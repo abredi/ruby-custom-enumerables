@@ -113,8 +113,10 @@ module Enumerable
     acc
   end
 
-  def multiply_els ary
-    ary.my_inject { |mul, n| mul * n }
+  def multiply_els
+    self.my_inject { |mul, n| mul * n }
   end
 
 end
+
+print [2,4,5].multiply_els
