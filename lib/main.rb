@@ -21,7 +21,6 @@ module Enumerable
   end
    
   def my_map(prok = nil)
-    # return enum_for unless block_given?
     array = is_a?(Range) ? to_a : self
 
     filtered = []
