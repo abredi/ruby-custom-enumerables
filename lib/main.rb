@@ -48,7 +48,20 @@ module Enumerable
     end
     flag
   end
-   
+  
+  def my_count(arg = nil)
+    array = is_a?(Range) ? to_a : self
+    if arg
+      return array.select{|val| val if val == arg}.length   
+    end
+    return array.length unless block_given?
+    count = array.length
+    for item in array
+      count-=1 unless yield(item)
+    end
+    count
+  end
+
   def my_map(prok = nil)
     array = is_a?(Range) ? to_a : self
 
