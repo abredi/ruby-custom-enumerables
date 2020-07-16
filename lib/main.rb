@@ -39,6 +39,15 @@ module Enumerable
     end
     flag
   end
+
+  def my_none?
+    flag = true
+    for item in array
+      flag = yield(item)
+      break if flag
+    end
+    flag
+  end
    
   def my_map(prok = nil)
     array = is_a?(Range) ? to_a : self
