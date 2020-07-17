@@ -91,4 +91,31 @@ RSpec.describe Enumerable do
       expect([].my_all?).to eql(true)
     end
   end
+
+  describe '#my_any?' do
+    it 'should be return true based on the given block if it returns true' do
+      expect(fruits_ary.my_any? { |value| value == 'banana' }).to eql(true)
+    end
+
+    it 'should work with range' do
+      expect((1..5).my_any? { |val| val.is_a?(String) }).to eql(false)
+    end
+
+    it 'should return true if the given array has one truthy data' do
+      expect([nil, true, 99].my_any?).to eql(true)
+    end
+
+    it 'should return true if the given type parameter match one of the element' do
+      ary = fruits_ary + [2]
+      expect(ary.my_any?(Numeric)).to eql(true)
+    end
+
+    it 'should return true if the given parameter match one of the element' do
+      expect(fruits_ary.my_any?('banana')).to eql(true)
+    end
+
+    it 'should return fasle no truthy data is provided' do
+      expect([].my_any?).to eql(false)
+    end
+  end
 end
