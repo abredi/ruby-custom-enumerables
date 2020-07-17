@@ -118,4 +118,22 @@ RSpec.describe Enumerable do
       expect([].my_any?).to eql(false)
     end
   end
+
+  describe '#my_none?' do
+    it 'should be return false based on the given block ' do
+      expect(fruits_ary.my_none? { |value| value == 'banana' }).to eql(false)
+    end
+
+    it 'should work with range' do
+      expect((1..5).my_none? { |val| val.is_a?(String) }).to eql(true)
+    end
+
+    it 'should return true if the given array has no truthy data' do
+      expect([nil, false].my_none?).to eql(true)
+    end
+
+    it 'should return true no truthy data is provided' do
+      expect([].my_none?).to eql(true)
+    end
+  end
 end
