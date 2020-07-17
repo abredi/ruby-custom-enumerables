@@ -73,4 +73,22 @@ RSpec.describe Enumerable do
       expect(fruits_ary.my_select.is_a?(Enumerable)).to eql(true)
     end
   end
+
+  describe '#my_all?' do
+    it 'should be return false based on the given block' do
+      expect(fruits_ary.my_all? { |value| value == 'banana' }).to eql(false)
+    end
+
+    it 'should work with range' do
+      expect((1..5).my_all? { |val| val.is_a?(Numeric) }).to eql(true)
+    end
+
+    it 'should return false if the given array has a falsy data' do
+      expect([nil, true, 99].my_all?).to eql(false)
+    end
+
+    it 'should return true no falsy data is provided' do
+      expect([].my_all?).to eql(true)
+    end
+  end
 end
