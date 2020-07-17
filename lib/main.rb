@@ -26,7 +26,7 @@ module Enumerable
 
   def my_all?
     flag = true
-    for item in array
+    array.my_each do |item| 
       flag = yield(item)
       break unless flag
     end
