@@ -1,5 +1,5 @@
 # NEXT MEAL
-![Hireable](https://cdn.rawgit.com/hiendv/hireable/master/styles/default/yes.svg)
+![Hireable](https://cdn.rawgit.com/hiendv/hireable/master/styles/default/yes.svg) [![Run on Repl.it](https://repl.it/badge/github/wrakc/Bubble-Sort---Microverse)](https://repl.it/@aliabdulaziz/ruby-custom-enumerables)
 
 > The Enumerable module that gets mixed into the Array and Hash classes (among others) and provides you with lots of handy iterator methods. To prove that there's no magic to it, custom build of those methods.
 
@@ -68,10 +68,6 @@ Give a ⭐️ if you like this project!
 ## Acknowledgments
 
 - [Thanks for Microverse][https://github.com/microverseinc]
-- [Thank you, PatashuleKE, for the design.](https://www.behance.net/gallery/25563385/PatashuleKE)
-  > I used their web design for this project
-- [Thank you, @matheusfrade, for the meal picture.](https://unsplash.com/@matheusfrade)
-  > I used his meal picture for this project
 
 ## 📝 License
 
