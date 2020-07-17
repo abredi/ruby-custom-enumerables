@@ -154,4 +154,18 @@ RSpec.describe Enumerable do
       expect(fruits_ary.my_count { |item| item.eql?('banana') }).to eql(1)
     end
   end
+
+  describe '#my_map' do
+    it 'should be return the filtered of the array based on the given block' do
+      expect(fruits_ary.my_map { |item| item.length * 100 }).to eql(fruits_ary.map { |item| item.length * 100 })
+    end
+
+    it 'should work with range' do
+      expect((1..5).my_map { |i| i * i }).to eql([1, 4, 9, 16, 25])
+    end
+
+    it 'should be return Enumerable if the block is missing' do
+      expect(fruits_ary.my_map.is_a?(Enumerable)).to eql(true)
+    end
+  end
 end
