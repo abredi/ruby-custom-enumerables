@@ -14,7 +14,7 @@ module Enumerable
     array = is_a?(Range) ? to_a : self
     index = -1
     array.my_each { |item| yield(item, index += 1) }
-    array
+    self
   end
 
   def my_select
