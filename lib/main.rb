@@ -26,28 +26,83 @@ module Enumerable
     filtered
   end
 
-  def my_all?
+  def my_all?(cond = nil)
+    array = is_a?(Range) ? to_a : self
     flag = true
+    if cond
+      if cond.is_a?(Class)
+        array.my_each do |item|
+          return false unless item.is_a?(cond)
+        end
+      else
+        array.my_each do |item|
+          return false unless item == cond
+        end
+      end
+      return flag
+    end
+    unless block_given?
+      array.my_each do |item|
+        return false unless item
+      end
+      return flag
+    end
     array.my_each do |item|
-      flag = yield(item)
-      break unless flag
+      return false unless yield(item)
     end
     flag
   end
 
-  def my_any?
-    flag = array.empty?
-    array.my_each do
-      break if yield(item)
+  def my_any?(cond = nil)
+    array = is_a?(Range) ? to_a : self
+    flag = false
+    if cond
+      if cond.is_a?(Class)
+        array.my_each do |item|
+          return true if item.is_a?(cond)
+        end
+      else
+        array.my_each do |item|
+          return true if item == cond
+        end
+      end
+      return flag
+    end
+    unless block_given?
+      array.my_each do |item|
+        return true if item
+      end
+      return flag
+    end
+    array.my_each do |item|
+      return true if yield(item)
     end
     flag
   end
 
-  def my_none?
+  def my_none?(cond = nil)
+    array = is_a?(Range) ? to_a : self
     flag = true
-    array.my_each do
-      flag = yield(item)
-      break if flag
+    if cond
+      if cond.is_a?(Class)
+        array.my_each do |item|
+          return false if item.is_a?(cond)
+        end
+      else
+        array.my_each do |item|
+          return false if item == cond
+        end
+      end
+      return flag
+    end
+    unless block_given?
+      array.my_each do |item|
+        return false if item
+      end
+      return flag
+    end
+    array.my_each do |item|
+      return false if yield(item)
     end
     flag
   end
