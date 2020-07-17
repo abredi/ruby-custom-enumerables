@@ -52,15 +52,16 @@ module Enumerable
 
   def my_count(arg = nil)
     array = is_a?(Range) ? to_a : self
+
     if arg
-      return array.select{ |val| val if val == arg }.length
+      return array.my_select { |val| val if val == arg }.length
     end
 
     count = array.length
 
     return count unless block_given?
-    
-    for item in array
+
+    array.my_each do |item|
       count -= 1 unless yield(item)
     end
     count
@@ -71,36 +72,30 @@ module Enumerable
 
     filtered = []
     if prok
-      for item in array
-        filtered.push(prok.call(item))
-      end
+      array.my_each { |item| filtered.push(prok.call(item)) }
     else
-      for item in array
-        filtered.push(yield(item))
-      end
+      array.my_each { |item| filtered.push(yield(item)) }
     end
-    
     filtered
   end
-  
+
   def my_inject(init = nil)
     array = is_a?(Range) ? to_a : self
 
     acc = init
-
     unless init.is_a?(Integer)
       acc = array[0]
       array.shift
     end
 
     if init.is_a?(Symbol)
-      for item in array do
+      array.my_each do |item|
         acc = acc.send(init, item)
       end
       return acc
     end
 
-    for item in array do
+    array.my_each do |item|
       acc = yield(acc, item)
     end
     acc
@@ -109,16 +104,4 @@ module Enumerable
   def multiply_els
     my_inject { |mul, n| mul * n }
   end
-
 end
-
-hash = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5 }
-friends = ['Sharon', 'Leo', 'Leila', 'Brian', 'Arun']
-
-# my_each
-hash.my_each do |value, key| 
-  print value, '-', key
-  puts ''
-end
-
-puts ''
