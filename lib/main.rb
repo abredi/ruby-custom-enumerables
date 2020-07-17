@@ -43,13 +43,13 @@ module Enumerable
 
   def my_none?
     flag = true
-    for item in array
+    array.my_each do
       flag = yield(item)
       break if flag
     end
     flag
   end
-  
+
   def my_count(arg = nil)
     array = is_a?(Range) ? to_a : self
     if arg
