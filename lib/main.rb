@@ -5,6 +5,7 @@ module Enumerable
     array = is_a?(Range) ? to_a : self
 
     array.map { |item| yield(item) }
+    array
   end
 
   def my_each_with_index
@@ -13,6 +14,7 @@ module Enumerable
     array = is_a?(Range) ? to_a : self
     index = -1
     array.my_each { |item| yield(item, index += 1) }
+    array
   end
 
   def my_select
