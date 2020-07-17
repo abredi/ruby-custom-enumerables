@@ -26,7 +26,7 @@ module Enumerable
 
   def my_all?
     flag = true
-    array.my_each do |item| 
+    array.my_each do |item|
       flag = yield(item)
       break unless flag
     end
@@ -34,12 +34,12 @@ module Enumerable
   end
 
   def my_any?
-    flag = array.length > 0
+    flag = array.empty?
     array.my_each do
       break if yield(item)
     end
     flag
-end
+  end
 
   def my_none?
     flag = true
