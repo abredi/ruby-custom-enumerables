@@ -136,4 +136,22 @@ RSpec.describe Enumerable do
       expect([].my_none?).to eql(true)
     end
   end
+
+  describe '#my_count' do
+    it 'should be return the length of the array if no block given' do
+      expect(fruits_ary.my_count).to eql(fruits_ary.length)
+    end
+
+    it 'should work with range' do
+      expect((1..5).my_count).to eql(5)
+    end
+
+    it 'should return true if the given array has no truthy data' do
+      expect(fruits_ary.my_count(100)).to eql(fruits_ary.count(100))
+    end
+
+    it 'should return true no truthy data is provided' do
+      expect(fruits_ary.my_count { |item| item.eql?('banana') }).to eql(1)
+    end
+  end
 end
