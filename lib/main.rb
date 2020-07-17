@@ -11,7 +11,6 @@ module Enumerable
     return enum_for unless block_given?
 
     array = is_a?(Range) ? to_a : self
-
     index = -1
     array.my_each { |item| yield(item, index += 1) }
   end
@@ -20,14 +19,11 @@ module Enumerable
     return enum_for unless block_given?
 
     array = is_a?(Range) ? to_a : self
-
     filtered = []
-    for item in array
-      filtered.push(item) if yield(item)
-    end
+    array.my_each { |item| filtered.push(item) if yield(item) }
     filtered
   end
-   
+
   def my_all?
     flag = true
     for item in array
