@@ -1,3 +1,22 @@
+def check_codition(flag, array = [])
+  if cond.is_a?(Class)
+    array.my_each do |item|
+      return !flag if item.is_a?(cond)
+    end
+  else
+    array.my_each do |item|
+      return !flag if item == cond
+    end
+  end
+  flag
+end
+
+def check_block(flag, array)
+  array.my_each do |item|
+    return !flag if item
+  end
+  flag
+end
 module Enumerable
   def my_each
     return enum_for unless block_given?
@@ -29,24 +48,10 @@ module Enumerable
   def my_all?(cond = nil)
     array = is_a?(Range) ? to_a : self
     flag = true
-    if cond
-      if cond.is_a?(Class)
-        array.my_each do |item|
-          return false unless item.is_a?(cond)
-        end
-      else
-        array.my_each do |item|
-          return false unless item == cond
-        end
-      end
-      return flag
-    end
-    unless block_given?
-      array.my_each do |item|
-        return false unless item
-      end
-      return flag
-    end
+    return check_codition(flag, array) if cond
+
+    return check_block(flag, array) unless block_given?
+
     array.my_each do |item|
       return false unless yield(item)
     end
@@ -56,24 +61,11 @@ module Enumerable
   def my_any?(cond = nil)
     array = is_a?(Range) ? to_a : self
     flag = false
-    if cond
-      if cond.is_a?(Class)
-        array.my_each do |item|
-          return true if item.is_a?(cond)
-        end
-      else
-        array.my_each do |item|
-          return true if item == cond
-        end
-      end
-      return flag
-    end
-    unless block_given?
-      array.my_each do |item|
-        return true if item
-      end
-      return flag
-    end
+
+    return check_condition(flag, array) if cond
+
+    return check_block(flag, array) unless block_given?
+
     array.my_each do |item|
       return true if yield(item)
     end
@@ -83,24 +75,11 @@ module Enumerable
   def my_none?(cond = nil)
     array = is_a?(Range) ? to_a : self
     flag = true
-    if cond
-      if cond.is_a?(Class)
-        array.my_each do |item|
-          return false if item.is_a?(cond)
-        end
-      else
-        array.my_each do |item|
-          return false if item == cond
-        end
-      end
-      return flag
-    end
-    unless block_given?
-      array.my_each do |item|
-        return false if item
-      end
-      return flag
-    end
+
+    return check_codition(flag, array) if cond
+
+    return check_block(flag, array) unless block_given?
+
     array.my_each do |item|
       return false if yield(item)
     end
@@ -162,7 +141,9 @@ module Enumerable
     acc
   end
 
-  def multiply_els
-    my_inject { |mul, n| mul * n }
+  def multiply_els(ary)
+    ary.my_inject do |acc, n|
+      acc * n
+    end
   end
 end
