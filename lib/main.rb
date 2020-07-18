@@ -166,4 +166,3 @@ module Enumerable
     my_inject { |mul, n| mul * n }
   end
 end
-
