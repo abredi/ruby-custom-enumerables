@@ -17,6 +17,14 @@ def check_block(flag, array)
   end
   flag
 end
+
+def check_symbol(acc, init, symbol, array)
+  init = symbol || init
+  array.my_each do |item|
+    acc = acc.send(init, item)
+  end
+  acc
+end
 module Enumerable
   def my_each
     return enum_for unless block_given?
@@ -127,13 +135,7 @@ module Enumerable
       array.shift
     end
 
-    if init.is_a?(Symbol) || symbol.is_a?(Symbol)
-      init = symbol || init
-      array.my_each do |item|
-        acc = acc.send(init, item)
-      end
-      return acc
-    end
+    return check_symbol(acc, init, symbol, array) if init.is_a?(Symbol) || symbol.is_a?(Symbol)
 
     array.my_each do |item|
       acc = yield(acc, item)
