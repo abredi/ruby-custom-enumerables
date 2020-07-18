@@ -198,7 +198,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return the longest wor' do
-      votes = ["Hayat", "Sky Light", "Hayat"]
+      votes = %w[Hayat Sky Light Hayat]
       result = votes.my_inject(Hash.new(0)) do |res, vote|
         res[vote] = res[vote] + 1
         res
