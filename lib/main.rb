@@ -138,16 +138,18 @@ module Enumerable
     filtered
   end
 
-  def my_inject(init = nil)
+  def my_inject(init = nil, symbol = nil)
     array = is_a?(Range) ? to_a : self
 
     acc = init
-    unless init.is_a?(Integer)
+
+    if !init || init.is_a?(Symbol)
       acc = array[0]
       array.shift
     end
 
-    if init.is_a?(Symbol)
+    if init.is_a?(Symbol) || symbol.is_a?(Symbol)
+      init = symbol || init
       array.my_each do |item|
         acc = acc.send(init, item)
       end
@@ -164,3 +166,4 @@ module Enumerable
     my_inject { |mul, n| mul * n }
   end
 end
+

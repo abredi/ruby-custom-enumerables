@@ -6,8 +6,7 @@ RSpec.describe Enumerable do
 
   describe '#my_each' do
     it 'should be equal' do
-      ary = %w[zero one two]
-      expect(ary.my_each(&:upcase)).to eql(ary)
+      expect(fruits_ary.my_each(&:upcase)).to eql(fruits_ary)
     end
 
     it 'should be excute the given block code' do
@@ -30,11 +29,11 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_each_with_index' do
-    it 'should be return array equal to the original' do
+    it 'should return array equal to the original' do
       expect(fruits_ary.my_each_with_index { |value| value }).to eql(fruits_ary)
     end
 
-    it 'should be return range equal to the original' do
+    it 'should return range equal to the original' do
       raw_range = (1..5)
       expect(raw_range.my_each_with_index { |value| value }).to eql(raw_range)
     end
@@ -58,7 +57,7 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_select' do
-    it 'should be return filtered array based on the given block' do
+    it 'should return filtered array based on the given block' do
       expect(fruits_ary.my_select { |value| value == 'banana' }).to eql(['banana'])
     end
 
@@ -69,13 +68,13 @@ RSpec.describe Enumerable do
       expect(filtered).to eql([1])
     end
 
-    it 'should be return Enumerable if the block is missing' do
+    it 'should return Enumerable if the block is missing' do
       expect(fruits_ary.my_select.is_a?(Enumerable)).to eql(true)
     end
   end
 
   describe '#my_all?' do
-    it 'should be return false based on the given block' do
+    it 'should return false based on the given block' do
       expect(fruits_ary.my_all? { |value| value == 'banana' }).to eql(false)
     end
 
@@ -93,7 +92,7 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_any?' do
-    it 'should be return true based on the given block if it returns true' do
+    it 'should return true based on the given block if it returns true' do
       expect(fruits_ary.my_any? { |value| value == 'banana' }).to eql(true)
     end
 
@@ -120,7 +119,7 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_none?' do
-    it 'should be return false based on the given block ' do
+    it 'should return false based on the given block ' do
       expect(fruits_ary.my_none? { |value| value == 'banana' }).to eql(false)
     end
 
@@ -138,7 +137,7 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_count' do
-    it 'should be return the length of the array if no block given' do
+    it 'should return the length of the array if no block given' do
       expect(fruits_ary.my_count).to eql(fruits_ary.length)
     end
 
@@ -156,7 +155,7 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_map' do
-    it 'should be return the filtered of the array based on the given block' do
+    it 'should return the filtered of the array based on the given block' do
       expect(fruits_ary.my_map { |item| item.length * 100 }).to eql(fruits_ary.map { |item| item.length * 100 })
     end
 
@@ -164,8 +163,47 @@ RSpec.describe Enumerable do
       expect((1..5).my_map { |i| i * i }).to eql([1, 4, 9, 16, 25])
     end
 
-    it 'should be return Enumerable if the block is missing' do
+    it 'should return Enumerable if the block is missing' do
       expect(fruits_ary.my_map.is_a?(Enumerable)).to eql(true)
+    end
+  end
+
+  describe '#my_inject' do
+    it 'should return the accumulated value' do
+      ary = [5, 6, 7, 8, 9, 10]
+      expect(ary.my_inject { |acc, n| acc + n }).to eql(45)
+    end
+
+    it 'should work with range' do
+      expect((1..4).inject { |product, n| product * n }).to eql(24)
+    end
+
+    it 'should return the accumulated value based the given parameter' do
+      expect((5..10).my_inject(100) { |acc, n| acc + n }).to eql(145)
+    end
+
+    it 'should return the accumulated value based the given wild card' do
+      expect((1..4).my_inject(:+) { |acc, n| acc + n }).to eql(10)
+    end
+
+    it 'should return the accumulated value based the given wild card and initial value' do
+      expect((1..4).my_inject(10, :*) { |acc, n| acc + n }).to eql(240)
+    end
+
+    it 'should return the longest word' do
+      longest = %w[cat sheep bear].inject do |memo, word|
+        memo.length > word.length ? memo : word
+      end
+      expect(longest).to eql('sheep')
+    end
+
+    it 'should return the longest wor' do
+      votes = ["Hayat", "Sky Light", "Hayat"]
+      result = votes.my_inject(Hash.new(0)) do |res, vote|
+        res[vote] = res[vote] + 1
+        res
+      end
+      expect(result['Hayat']).to eql(2)
     end
   end
 end
