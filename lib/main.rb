@@ -1,4 +1,4 @@
-def check_codition(flag, array = [])
+def check_condition(flag, array, cond)
   if cond.is_a?(Class)
     array.my_each do |item|
       return !flag if item.is_a?(cond)
@@ -48,7 +48,7 @@ module Enumerable
   def my_all?(cond = nil)
     array = is_a?(Range) ? to_a : self
     flag = true
-    return check_codition(flag, array) if cond
+    return check_condition(flag, array, cond) if cond
 
     return check_block(flag, array) unless block_given?
 
@@ -62,7 +62,7 @@ module Enumerable
     array = is_a?(Range) ? to_a : self
     flag = false
 
-    return check_condition(flag, array) if cond
+    return check_condition(flag, array, cond) if cond
 
     return check_block(flag, array) unless block_given?
 
@@ -76,7 +76,7 @@ module Enumerable
     array = is_a?(Range) ? to_a : self
     flag = true
 
-    return check_codition(flag, array) if cond
+    return check_condition(flag, array, cond) if cond
 
     return check_block(flag, array) unless block_given?
 
