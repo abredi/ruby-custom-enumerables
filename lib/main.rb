@@ -32,7 +32,7 @@ module Enumerable
     array = is_a?(Range) ? to_a : self
 
     array.map { |item| yield(item) }
-    array
+    self
   end
 
   def my_each_with_index
@@ -142,10 +142,10 @@ module Enumerable
     end
     acc
   end
+end
 
-  def multiply_els(ary)
-    ary.my_inject do |acc, n|
-      acc * n
-    end
+def multiply_els(ary)
+  ary.my_inject do |acc, n|
+    acc * n
   end
 end

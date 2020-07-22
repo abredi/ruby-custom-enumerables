@@ -5,11 +5,16 @@ RSpec.describe Enumerable do
   fruits_ary = %w[apple banana strawberry pineapple]
 
   describe '#my_each' do
-    it 'should be equal' do
+    it 'should return array equal to the original' do
       expect(fruits_ary.my_each(&:upcase)).to eql(fruits_ary)
     end
 
-    it 'should be excute the given block code' do
+    it 'should return range equal to the original' do
+      rng = (1..5)
+      expect(rng.my_each { |item| item }).to eql(rng)
+    end
+
+    it 'should be execute the given block code' do
       raw_ary = %w[one two three]
       cap = ''
       raw_ary.my_each do |item|
@@ -82,8 +87,19 @@ RSpec.describe Enumerable do
       expect((1..5).my_all? { |val| val.is_a?(Numeric) }).to eql(true)
     end
 
+    it 'should return true f all of the collection is a member of such class::Integer' do
+      expect((1..5).my_all? { |val| val.is_a?(Integer) }).to eql(true)
+    end
+    it 'should work with a class as an paramenter; return true false all items in the array are not a member String' do
+      expect(fruits_ary.my_all? { |val| val.is_a?(String) }).to eql(true)
+    end
+
     it 'should return false if the given array has a falsy data' do
       expect([nil, true, 99].my_all?).to eql(false)
+    end
+
+    it 'should return false if the given block return false; even once' do
+      expect([99, 100, 99].my_all? { |value| value == 99 }).to eql(false)
     end
 
     it 'should return true no falsy data is provided' do
@@ -204,6 +220,12 @@ RSpec.describe Enumerable do
         res
       end
       expect(result['Hayat']).to eql(2)
+    end
+
+    it 'should not mutate the original value' do
+      ary = [2, 4, 8, 3]
+      ary.inject { |product, n| product * n }
+      expect(ary).to eql([2, 4, 8, 3])
     end
   end
 end
