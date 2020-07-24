@@ -1,19 +1,56 @@
-def check_condition(flag, array, cond)
-  if cond.is_a?(Class)
+def check_regex(flag, array, cond, neg)
+  if neg
+    array.my_each do |item|
+      return !flag unless cond.match(item.to_s)
+    end
+  else
+    array.my_each do |item|
+      return !flag if cond.match(item.to_s)
+    end
+  end
+  flag
+end
+
+def check_class(flag, array, cond, neg)
+  if neg
+    array.my_each do |item|
+      return !flag unless item.is_a?(cond)
+    end
+  else
     array.my_each do |item|
       return !flag if item.is_a?(cond)
+    end
+  end
+  flag
+end
+
+def check_condition(flag, array, cond, neg = false)
+  return check_regex(flag, array, cond, neg) if cond.is_a?(Regexp)
+
+  return check_class(flag, array, cond, neg) if cond.is_a?(Class)
+
+  if neg
+    array.my_each do |item|
+      return !flag unless item == cond
     end
   else
     array.my_each do |item|
       return !flag if item == cond
     end
   end
+
   flag
 end
 
-def check_block(flag, array)
-  array.my_each do |item|
-    return !flag if item
+def check_block(flag, array, neg = false)
+  if neg
+    array.my_each do |item|
+      return !flag unless item
+    end
+  else
+    array.my_each do |item|
+      return !flag if item
+    end
   end
   flag
 end
@@ -56,9 +93,9 @@ module Enumerable
   def my_all?(cond = nil)
     array = is_a?(Range) ? to_a : self
     flag = true
-    return check_condition(flag, array, cond) if cond
+    return check_condition(flag, array, cond, true) if cond
 
-    return check_block(flag, array) unless block_given?
+    return check_block(flag, array, true) unless block_given?
 
     array.my_each do |item|
       return false unless yield(item)
@@ -126,13 +163,15 @@ module Enumerable
   end
 
   def my_inject(init = nil, symbol = nil)
-    array = is_a?(Range) ? to_a : self
+    ary = is_a?(Range) ? to_a : self
 
     acc = init
 
     if !init || init.is_a?(Symbol)
-      acc = array[0]
-      array.shift
+      acc = ary[0]
+      array = ary.slice(1, ary.length - 1)
+    else
+      array = ary
     end
 
     return check_symbol(acc, init, symbol, array) if init.is_a?(Symbol) || symbol.is_a?(Symbol)
@@ -149,3 +188,6 @@ def multiply_els(ary)
     acc * n
   end
 end
+
+ary = [5, 6, 7, 8, 9, 10]
+p ary.my_inject(100) { |acc, val| acc + val }

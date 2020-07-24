@@ -87,9 +87,18 @@ RSpec.describe Enumerable do
       expect((1..5).my_all? { |val| val.is_a?(Numeric) }).to eql(true)
     end
 
-    it 'should return true f all of the collection is a member of such class::Integer' do
-      expect((1..5).my_all? { |val| val.is_a?(Integer) }).to eql(true)
+    it 'should return true if all of the collection match the given paramenter' do
+      expect([3, 3, 3, 3].my_all?(3)).to eql(true)
     end
+
+    it 'should return true if all of the collection is a member of such class::Integer' do
+      expect([1, 2, 8, 6, 2, 0, 4, 7, 3].my_all? { |val| val.is_a?(Integer) }).to eql(true)
+    end
+
+    it 'should return true if all of the collection is a member of such class::Integer #in shorter form' do
+      expect([6, 3, 3, 7, 1, 1, 2, 0, 0].my_all?(Integer)).to eql(true)
+    end
+
     it 'should work with a class as an paramenter; return true false all items in the array are not a member String' do
       expect(fruits_ary.my_all? { |val| val.is_a?(String) }).to eql(true)
     end
@@ -103,8 +112,12 @@ RSpec.describe Enumerable do
     end
 
     it 'should return true no falsy data is provided' do
-      expect([].my_all?).to eql(true)
+      expect([1, true, 'hi', []].my_all?).to eql(true)
     end
+
+    # it 'should return true ' do
+    #   expect([1, true, 'hi', []].my_all?).to eql(true)
+    # end
   end
 
   describe '#my_any?' do
@@ -114,6 +127,14 @@ RSpec.describe Enumerable do
 
     it 'should work with range' do
       expect((1..5).my_any? { |val| val.is_a?(String) }).to eql(false)
+    end
+
+    it 'should work with regex and return false if the given paramenter not match the collection' do
+      expect(fruits_ary.my_any?(/z/)).to eql(false)
+    end
+
+    it 'should work with regex and return true if the given paramenter match the collection' do
+      expect(fruits_ary.my_any?(/apple/)).to eql(true)
     end
 
     it 'should return true if the given array has one truthy data' do
