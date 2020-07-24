@@ -1,0 +1,2 @@
+language = "ruby"
+run = "lib/main.rb"
