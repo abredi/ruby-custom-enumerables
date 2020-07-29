@@ -1,4 +1,4 @@
-# NEXT MEAL
+# RUBY CUSTOM ENUMERABLES
 ![Hireable](https://cdn.rawgit.com/hiendv/hireable/master/styles/default/yes.svg) [![Run on Repl.it](https://repl.it/badge/github/wrakc/Bubble-Sort---Microverse)](https://repl.it/@aliabdulaziz/ruby-custom-enumerables)
 
 > The Enumerable module that gets mixed into the Array and Hash classes (among others) and provides you with lots of handy iterator methods. To prove that there's no magic to it, custom build of those methods.
