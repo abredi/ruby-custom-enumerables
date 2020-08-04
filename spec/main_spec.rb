@@ -4,7 +4,7 @@ require_relative '../lib/main'
 RSpec.describe Enumerable do
   let(:fruits_ary) { %w[apple banana strawberry pineapple] }
   let(:raw_range) { (1..5) }
-  let(:str_ary) { %w[Hayat Sky-Light Hayat ] }
+  let(:str_ary) { %w[Hayat Sky-Light Hayat] }
   let(:number_ary) { [5, 6, 7, 8, 9, 10] }
 
   context '#my_each' do
@@ -39,7 +39,6 @@ RSpec.describe Enumerable do
     end
 
     it 'should return range equal to the original' do
-      
       expect(raw_range.my_each_with_index { |value| value }).to eql(raw_range)
     end
 
@@ -114,7 +113,6 @@ RSpec.describe Enumerable do
     it 'should return true no falsy data is provided' do
       expect([1, true, 'hi', []].my_all?).to eql(true)
     end
-
   end
 
   context '#my_any?' do
@@ -240,15 +238,14 @@ RSpec.describe Enumerable do
     end
 
     it 'should not mutate the original value' do
-      ary = [2, 4, 8, 3]
-      ary.inject { |product, n| product * n }
-      expect(ary).to eql([2, 4, 8, 3])
+      number_ary.inject { |product, n| product * n }
+      expect(ary).to eql([5, 6, 7, 8, 9, 10])
     end
   end
 
   context '#multiply_els' do
     it 'should return the accumulated value' do
-      expect(multiply_els(number_ary)).to eql(151200)
+      expect(multiply_els(number_ary)).to eql(151_200)
     end
   end
 end
