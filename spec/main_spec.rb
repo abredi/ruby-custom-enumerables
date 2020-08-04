@@ -4,7 +4,7 @@ require_relative '../lib/main'
 RSpec.describe Enumerable do
   let(:fruits_ary) { %w[apple banana strawberry pineapple] }
   let(:raw_range) { (1..5) }
-  let(:str_ary) { %w[Hayat Sky Light Hayat] }
+  let(:str_ary) { %w[Hayat Sky-Light Hayat ] }
   let(:number_ary) { [5, 6, 7, 8, 9, 10] }
 
   context '#my_each' do
@@ -13,7 +13,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return range equal to the original' do
-      expect(raw_range.my_each { |item| item }).to eql(rng)
+      expect(raw_range.my_each { |item| item }).to eql(raw_range)
     end
 
     it 'should be execute the given block code' do
@@ -224,10 +224,10 @@ RSpec.describe Enumerable do
     end
 
     it 'should return the longest word' do
-      longest = %w[cat sheep bear] str_ary.inject do |memo, word|
+      longest = str_ary.inject do |memo, word|
         memo.length > word.length ? memo : word
       end
-      expect(longest).to eql('sheep')
+      expect(longest).to eql('Sky-Light')
     end
 
     it 'should return the longest wor' do
@@ -248,7 +248,7 @@ RSpec.describe Enumerable do
 
   context '#multiply_els' do
     it 'should return the accumulated value' do
-      expect(multiply_els(number_ary)).to eql(45)
+      expect(multiply_els(number_ary)).to eql(151200)
     end
   end
 end
