@@ -2,9 +2,9 @@ require 'rspec'
 require '../lib/main'
 
 RSpec.describe Enumerable do
-  fruits_ary = %w[apple banana strawberry pineapple]
+  let(:fruits_ary) { %w[apple banana strawberry pineapple] }
 
-  describe '#my_each' do
+  context '#my_each' do
     it 'should return array equal to the original' do
       expect(fruits_ary.my_each(&:upcase)).to eql(fruits_ary)
     end
@@ -33,7 +33,7 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_each_with_index' do
+  context '#my_each_with_index' do
     it 'should return array equal to the original' do
       expect(fruits_ary.my_each_with_index { |value| value }).to eql(fruits_ary)
     end
@@ -61,7 +61,7 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_select' do
+  context '#my_select' do
     it 'should return filtered array based on the given block' do
       expect(fruits_ary.my_select { |value| value == 'banana' }).to eql(['banana'])
     end
@@ -78,7 +78,7 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_all?' do
+  context '#my_all?' do
     it 'should return false based on the given block' do
       expect(fruits_ary.my_all? { |value| value == 'banana' }).to eql(false)
     end
@@ -115,12 +115,9 @@ RSpec.describe Enumerable do
       expect([1, true, 'hi', []].my_all?).to eql(true)
     end
 
-    # it 'should return true ' do
-    #   expect([1, true, 'hi', []].my_all?).to eql(true)
-    # end
   end
 
-  describe '#my_any?' do
+  context '#my_any?' do
     it 'should return true based on the given block if it returns true' do
       expect(fruits_ary.my_any? { |value| value == 'banana' }).to eql(true)
     end
@@ -155,7 +152,7 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_none?' do
+  context '#my_none?' do
     it 'should return false based on the given block ' do
       expect(fruits_ary.my_none? { |value| value == 'banana' }).to eql(false)
     end
@@ -173,7 +170,7 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_count' do
+  context '#my_count' do
     it 'should return the length of the array if no block given' do
       expect(fruits_ary.my_count).to eql(fruits_ary.length)
     end
@@ -191,7 +188,7 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_map' do
+  context '#my_map' do
     it 'should return the filtered of the array based on the given block' do
       expect(fruits_ary.my_map { |item| item.length * 100 }).to eql(fruits_ary.map { |item| item.length * 100 })
     end
@@ -205,7 +202,7 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_inject' do
+  context '#my_inject' do
     it 'should return the accumulated value' do
       ary = [5, 6, 7, 8, 9, 10]
       expect(ary.my_inject { |acc, n| acc + n }).to eql(45)
