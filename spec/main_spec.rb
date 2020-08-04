@@ -3,6 +3,7 @@ require '../lib/main'
 
 RSpec.describe Enumerable do
   let(:fruits_ary) { %w[apple banana strawberry pineapple] }
+  let(:raw_range) { (1..5) }
 
   context '#my_each' do
     it 'should return array equal to the original' do
@@ -10,8 +11,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return range equal to the original' do
-      rng = (1..5)
-      expect(rng.my_each { |item| item }).to eql(rng)
+      expect(raw_range.my_each { |item| item }).to eql(rng)
     end
 
     it 'should be execute the given block code' do
@@ -24,7 +24,6 @@ RSpec.describe Enumerable do
     end
 
     it 'should work with range' do
-      raw_range = (1..5)
       last = 0
       raw_range.my_each do |item|
         last = item
@@ -39,7 +38,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return range equal to the original' do
-      raw_range = (1..5)
+      
       expect(raw_range.my_each_with_index { |value| value }).to eql(raw_range)
     end
 
@@ -67,7 +66,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should work with range' do
-      filtered = (1..5).my_select do |value|
+      filtered = raw_range.my_select do |value|
         value if value == 1
       end
       expect(filtered).to eql([1])
@@ -84,7 +83,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should work with range' do
-      expect((1..5).my_all? { |val| val.is_a?(Numeric) }).to eql(true)
+      expect(raw_range.my_all? { |val| val.is_a?(Numeric) }).to eql(true)
     end
 
     it 'should return true if all of the collection match the given paramenter' do
@@ -123,7 +122,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should work with range' do
-      expect((1..5).my_any? { |val| val.is_a?(String) }).to eql(false)
+      expect(raw_range.my_any? { |val| val.is_a?(String) }).to eql(false)
     end
 
     it 'should work with regex and return false if the given paramenter not match the collection' do
@@ -158,7 +157,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should work with range' do
-      expect((1..5).my_none? { |val| val.is_a?(String) }).to eql(true)
+      expect(raw_range.my_none? { |val| val.is_a?(String) }).to eql(true)
     end
 
     it 'should return true if the given array has no truthy data' do
@@ -176,7 +175,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should work with range' do
-      expect((1..5).my_count).to eql(5)
+      expect(raw_range.my_count).to eql(5)
     end
 
     it 'should return true if the given array has no truthy data' do
@@ -194,7 +193,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should work with range' do
-      expect((1..5).my_map { |i| i * i }).to eql([1, 4, 9, 16, 25])
+      expect(raw_range.my_map { |i| i * i }).to eql([1, 4, 9, 16, 25])
     end
 
     it 'should return Enumerable if the block is missing' do
