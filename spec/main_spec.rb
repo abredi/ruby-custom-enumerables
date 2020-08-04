@@ -66,10 +66,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should work with range' do
-      filtered = raw_range.my_select do |value|
-        value if value == 1
-      end
-      expect(filtered).to eql([1])
+      expect(raw_range.my_select { |value| value if value == 1 }).to eql([1])
     end
 
     it 'should return Enumerable if the block is missing' do
@@ -91,11 +88,11 @@ RSpec.describe Enumerable do
     end
 
     it 'should return true if all of the collection is a member of such class::Integer' do
-      expect([1, 2, 8, 6, 2, 0, 4, 7, 3].my_all? { |val| val.is_a?(Integer) }).to eql(true)
+      expect(number_ary.my_all? { |val| val.is_a?(Integer) }).to eql(true)
     end
 
     it 'should return true if all of the collection is a member of such class::Integer #in shorter form' do
-      expect([6, 3, 3, 7, 1, 1, 2, 0, 0].my_all?(Integer)).to eql(true)
+      expect(number_ary.my_all?(Integer)).to eql(true)
     end
 
     it 'should work with a class as an paramenter; return true false all items in the array are not a member String' do
@@ -229,8 +226,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return the longest wor' do
-      votes = %w[Hayat Sky Light Hayat]
-      result = votes.my_inject(Hash.new(0)) do |res, vote|
+      result = str_ary.my_inject(Hash.new(0)) do |res, vote|
         res[vote] = res[vote] + 1
         res
       end
@@ -238,8 +234,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should not mutate the original value' do
-      number_ary.inject { |product, n| product * n }
-      expect(ary).to eql([5, 6, 7, 8, 9, 10])
+      expect(number_ary.inject { |product, n| product * n }).to eql([5, 6, 7, 8, 9, 10])
     end
   end
 
