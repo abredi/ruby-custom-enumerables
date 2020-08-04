@@ -1,9 +1,11 @@
 require 'rspec'
-require '../lib/main'
+require_relative '../lib/main'
 
 RSpec.describe Enumerable do
   let(:fruits_ary) { %w[apple banana strawberry pineapple] }
   let(:raw_range) { (1..5) }
+  let(:str_ary) { %w[Hayat Sky Light Hayat] }
+  let(:number_ary) { [5, 6, 7, 8, 9, 10] }
 
   context '#my_each' do
     it 'should return array equal to the original' do
@@ -15,12 +17,11 @@ RSpec.describe Enumerable do
     end
 
     it 'should be execute the given block code' do
-      raw_ary = %w[one two three]
       cap = ''
-      raw_ary.my_each do |item|
+      str_ary.my_each do |item|
         cap = item.upcase
       end
-      expect(cap).to eql(raw_ary.last.upcase)
+      expect(cap).to eql(str_ary.last.upcase)
     end
 
     it 'should work with range' do
@@ -224,7 +225,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return the longest word' do
-      longest = %w[cat sheep bear].inject do |memo, word|
+      longest = %w[cat sheep bear] str_ary.inject do |memo, word|
         memo.length > word.length ? memo : word
       end
       expect(longest).to eql('sheep')
@@ -243,6 +244,12 @@ RSpec.describe Enumerable do
       ary = [2, 4, 8, 3]
       ary.inject { |product, n| product * n }
       expect(ary).to eql([2, 4, 8, 3])
+    end
+  end
+
+  context '#multiply_els' do
+    it 'should return the accumulated value' do
+      expect(multiply_els(number_ary)).to eql(45)
     end
   end
 end
