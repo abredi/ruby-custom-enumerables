@@ -219,10 +219,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return the longest word' do
-      longest = str_ary.inject do |memo, word|
-        memo.length > word.length ? memo : word
-      end
-      expect(longest).to eql('Sky-Light')
+      expect( str_ary.inject { |memo, word| memo.length > word.length ? memo : word } ).to eql('Sky-Light')
     end
 
     it 'should return the longest wor' do
@@ -234,7 +231,8 @@ RSpec.describe Enumerable do
     end
 
     it 'should not mutate the original value' do
-      expect(number_ary.inject { |product, n| product * n }).to eql([5, 6, 7, 8, 9, 10])
+      number_ary.my_inject { |product, n| product * n }
+      expect(number_ary).to eql([5, 6, 7, 8, 9, 10])
     end
   end
 
