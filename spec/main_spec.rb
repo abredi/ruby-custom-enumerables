@@ -204,8 +204,7 @@ RSpec.describe Enumerable do
 
   context '#my_inject' do
     it 'should return the accumulated value' do
-      ary = [5, 6, 7, 8, 9, 10]
-      expect(ary.my_inject { |acc, n| acc + n }).to eql(45)
+      expect(number_ary.my_inject { |acc, n| acc + n }).to eql(45)
     end
 
     it 'should work with range' do
