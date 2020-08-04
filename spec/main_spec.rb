@@ -219,7 +219,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return the longest word' do
-      expect( str_ary.inject { |memo, word| memo.length > word.length ? memo : word } ).to eql('Sky-Light')
+      expect(str_ary.inject { |memo, word| memo.length > word.length ? memo : word }).to eql('Sky-Light')
     end
 
     it 'should return the longest wor' do
