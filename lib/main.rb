@@ -62,6 +62,7 @@ def check_symbol(acc, init, symbol, array)
   end
   acc
 end
+
 module Enumerable
   def my_each
     return enum_for unless block_given?
@@ -188,6 +189,3 @@ def multiply_els(ary)
     acc * n
   end
 end
-
-ary = [5, 6, 7, 8, 9, 10]
-p ary.my_inject(100) { |acc, val| acc + val }

@@ -26,6 +26,7 @@ Set up your machine.
 
 - ruby
 - rubocop
+- rspec
 
 ### Setup
 
@@ -33,6 +34,8 @@ Set up your machine.
   > [download git](https://git-scm.com/downloads)
 - Follow the link below to install ruby
   > [Install Ruby](https://www.theodinproject.com/courses/ruby-programming/lessons/installing-ruby-ruby-programming)
+- Follow the link below to set up rspec
+  > [Set up RSpec (testing tool) to run the tests](https://relishapp.com/rspec/docs/gettingstarted)
 - Follow the link below to set up a linter
   > [Set up Linter (rubocop) to check code errors](https://github.com/rubocop-hq/rubocop)
 - Clone the repository
@@ -43,7 +46,10 @@ Set up your machine.
 
 ### Usage
 
-Go to the project directory and run open the `ruby lib/ruby.rb` file on your terminal.
+TO run unit tests
+  > Open your terminal then go to the project directory and execute `rspec` command
+For running the program
+  > Open your terminal then go to the project directory and run the `ruby lib/main.rb` file on your terminal.
 
 ## Authors
 

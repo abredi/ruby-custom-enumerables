@@ -1,30 +1,30 @@
 require 'rspec'
-require '../lib/main'
+require_relative '../lib/main'
 
 RSpec.describe Enumerable do
-  fruits_ary = %w[apple banana strawberry pineapple]
+  let(:fruits_ary) { %w[apple banana strawberry pineapple] }
+  let(:raw_range) { (1..5) }
+  let(:str_ary) { %w[Hayat Sky-Light Hayat] }
+  let(:number_ary) { [5, 6, 7, 8, 9, 10] }
 
-  describe '#my_each' do
+  context '#my_each' do
     it 'should return array equal to the original' do
       expect(fruits_ary.my_each(&:upcase)).to eql(fruits_ary)
     end
 
     it 'should return range equal to the original' do
-      rng = (1..5)
-      expect(rng.my_each { |item| item }).to eql(rng)
+      expect(raw_range.my_each { |item| item }).to eql(raw_range)
     end
 
     it 'should be execute the given block code' do
-      raw_ary = %w[one two three]
       cap = ''
-      raw_ary.my_each do |item|
+      str_ary.my_each do |item|
         cap = item.upcase
       end
-      expect(cap).to eql(raw_ary.last.upcase)
+      expect(cap).to eql(str_ary.last.upcase)
     end
 
     it 'should work with range' do
-      raw_range = (1..5)
       last = 0
       raw_range.my_each do |item|
         last = item
@@ -33,13 +33,12 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_each_with_index' do
+  context '#my_each_with_index' do
     it 'should return array equal to the original' do
       expect(fruits_ary.my_each_with_index { |value| value }).to eql(fruits_ary)
     end
 
     it 'should return range equal to the original' do
-      raw_range = (1..5)
       expect(raw_range.my_each_with_index { |value| value }).to eql(raw_range)
     end
 
@@ -61,16 +60,13 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_select' do
+  context '#my_select' do
     it 'should return filtered array based on the given block' do
       expect(fruits_ary.my_select { |value| value == 'banana' }).to eql(['banana'])
     end
 
     it 'should work with range' do
-      filtered = (1..5).my_select do |value|
-        value if value == 1
-      end
-      expect(filtered).to eql([1])
+      expect(raw_range.my_select { |value| value if value == 1 }).to eql([1])
     end
 
     it 'should return Enumerable if the block is missing' do
@@ -78,13 +74,13 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_all?' do
+  context '#my_all?' do
     it 'should return false based on the given block' do
       expect(fruits_ary.my_all? { |value| value == 'banana' }).to eql(false)
     end
 
     it 'should work with range' do
-      expect((1..5).my_all? { |val| val.is_a?(Numeric) }).to eql(true)
+      expect(raw_range.my_all? { |val| val.is_a?(Numeric) }).to eql(true)
     end
 
     it 'should return true if all of the collection match the given paramenter' do
@@ -92,11 +88,11 @@ RSpec.describe Enumerable do
     end
 
     it 'should return true if all of the collection is a member of such class::Integer' do
-      expect([1, 2, 8, 6, 2, 0, 4, 7, 3].my_all? { |val| val.is_a?(Integer) }).to eql(true)
+      expect(number_ary.my_all? { |val| val.is_a?(Integer) }).to eql(true)
     end
 
     it 'should return true if all of the collection is a member of such class::Integer #in shorter form' do
-      expect([6, 3, 3, 7, 1, 1, 2, 0, 0].my_all?(Integer)).to eql(true)
+      expect(number_ary.my_all?(Integer)).to eql(true)
     end
 
     it 'should work with a class as an paramenter; return true false all items in the array are not a member String' do
@@ -114,19 +110,15 @@ RSpec.describe Enumerable do
     it 'should return true no falsy data is provided' do
       expect([1, true, 'hi', []].my_all?).to eql(true)
     end
-
-    # it 'should return true ' do
-    #   expect([1, true, 'hi', []].my_all?).to eql(true)
-    # end
   end
 
-  describe '#my_any?' do
+  context '#my_any?' do
     it 'should return true based on the given block if it returns true' do
       expect(fruits_ary.my_any? { |value| value == 'banana' }).to eql(true)
     end
 
     it 'should work with range' do
-      expect((1..5).my_any? { |val| val.is_a?(String) }).to eql(false)
+      expect(raw_range.my_any? { |val| val.is_a?(String) }).to eql(false)
     end
 
     it 'should work with regex and return false if the given paramenter not match the collection' do
@@ -155,13 +147,13 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_none?' do
+  context '#my_none?' do
     it 'should return false based on the given block ' do
       expect(fruits_ary.my_none? { |value| value == 'banana' }).to eql(false)
     end
 
     it 'should work with range' do
-      expect((1..5).my_none? { |val| val.is_a?(String) }).to eql(true)
+      expect(raw_range.my_none? { |val| val.is_a?(String) }).to eql(true)
     end
 
     it 'should return true if the given array has no truthy data' do
@@ -173,13 +165,13 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_count' do
+  context '#my_count' do
     it 'should return the length of the array if no block given' do
       expect(fruits_ary.my_count).to eql(fruits_ary.length)
     end
 
     it 'should work with range' do
-      expect((1..5).my_count).to eql(5)
+      expect(raw_range.my_count).to eql(5)
     end
 
     it 'should return true if the given array has no truthy data' do
@@ -191,13 +183,13 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_map' do
+  context '#my_map' do
     it 'should return the filtered of the array based on the given block' do
       expect(fruits_ary.my_map { |item| item.length * 100 }).to eql(fruits_ary.map { |item| item.length * 100 })
     end
 
     it 'should work with range' do
-      expect((1..5).my_map { |i| i * i }).to eql([1, 4, 9, 16, 25])
+      expect(raw_range.my_map { |i| i * i }).to eql([1, 4, 9, 16, 25])
     end
 
     it 'should return Enumerable if the block is missing' do
@@ -205,10 +197,9 @@ RSpec.describe Enumerable do
     end
   end
 
-  describe '#my_inject' do
+  context '#my_inject' do
     it 'should return the accumulated value' do
-      ary = [5, 6, 7, 8, 9, 10]
-      expect(ary.my_inject { |acc, n| acc + n }).to eql(45)
+      expect(number_ary.my_inject { |acc, n| acc + n }).to eql(45)
     end
 
     it 'should work with range' do
@@ -228,15 +219,11 @@ RSpec.describe Enumerable do
     end
 
     it 'should return the longest word' do
-      longest = %w[cat sheep bear].inject do |memo, word|
-        memo.length > word.length ? memo : word
-      end
-      expect(longest).to eql('sheep')
+      expect(str_ary.inject { |memo, word| memo.length > word.length ? memo : word }).to eql('Sky-Light')
     end
 
     it 'should return the longest wor' do
-      votes = %w[Hayat Sky Light Hayat]
-      result = votes.my_inject(Hash.new(0)) do |res, vote|
+      result = str_ary.my_inject(Hash.new(0)) do |res, vote|
         res[vote] = res[vote] + 1
         res
       end
@@ -244,9 +231,14 @@ RSpec.describe Enumerable do
     end
 
     it 'should not mutate the original value' do
-      ary = [2, 4, 8, 3]
-      ary.inject { |product, n| product * n }
-      expect(ary).to eql([2, 4, 8, 3])
+      number_ary.my_inject { |product, n| product * n }
+      expect(number_ary).to eql([5, 6, 7, 8, 9, 10])
+    end
+  end
+
+  context '#multiply_els' do
+    it 'should return the accumulated value' do
+      expect(multiply_els(number_ary)).to eql(151_200)
     end
   end
 end
