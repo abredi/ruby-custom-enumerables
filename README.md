@@ -71,9 +71,6 @@ Feel free to check the [issues page](issues/).
 
 Give a ⭐️ if you like this project!
 
-## Acknowledgments
-
-- [Thanks for Microverse][https://github.com/microverseinc]
 
 ## 📝 License
 
